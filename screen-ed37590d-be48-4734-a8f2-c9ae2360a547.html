@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Azuki Community Onboarding</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/x-icon" href=https://firebasestorage.googleapis.com/v0/b/vinci-prod.appspot.com/o/projectData%2Fazuki-community-5703d009-669f-4%2Ficon%2Ficon.png?alt=media&token=1561c3e8-fba4-4a62-b0f0-502f41675f84>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+  <script>
+    window.addEventListener('load', async () => {
+        const formTitle = "undefined";
+        const ignore = ["#", "WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discordU", "discordJ", "twitterU", "linkedTwitter", "linkedDiscord", "but", "complete",  "completeC", "completeT",  "completeC1"];
+        var allElements = document.querySelectorAll('*[id]');
+        for (var i = 0, n = allElements.length; i < n; ++i) {
+            var el = allElements[i];
+            var result = ignore.filter(function(item){
+                return item.indexOf(el.id.split('----')[0]) > -1;            
+            });
+            if (result.length === 0) {
+                if (el.id && el.tagName === "BUTTON") {
+                    document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
+                }
+            }
+        }
+        init(); 
+        if(document.querySelector("#eth") !== null){
+            document.querySelector("#eth").addEventListener("click", onConnect);
+        }
+        if(document.querySelector("#inputNext") !== null && document.querySelector("#completeC") !== null){
+            document.querySelector("#inputNext").addEventListener("click", checkUserInputComplete);
+            if(document.querySelector("#completeC") !== null){
+                let emoji = "🔥"
+                if(emoji !== null){
+                    emoji = [emoji];
+                }else{
+                    emoji = null;
+                }
+                const completeMessage = "Thank you for completing the onboarding! You can now close this page.";
+                document.querySelector("#completeC").addEventListener("click", function(e){
+                    confettiComplete(event, emoji, completeMessage)
+                    e.preventDefault();
+                    return false;
+                });
+            }
+        }else{
+            if(document.querySelector("#inputNext") !== null){
+                document.querySelector("#inputNext").addEventListener("click", checkUserInput);
+            }
+            if(document.querySelector("#completeC") !== null){
+                let emoji = "🔥"
+                if(emoji !== null){
+                    emoji = [emoji];
+                }else{
+                    emoji = null;
+                }
+                const completeMessage = "Thank you for completing the onboarding! You can now close this page.";
+                document.querySelector("#completeC").addEventListener("click", function(e){
+                    confettiComplete(event, emoji, completeMessage)
+                    e.preventDefault();
+                    return false;
+                });
+            }
+        }
+        if(document.querySelector("#sol") !== null){
+            document.querySelector("#sol").addEventListener("click", onSolConnect);
+        }
+        if(document.querySelector("button[id*='discordU']") !== null){
+            document.querySelector("button[id*='discordU']").addEventListener("click", function(e){
+                openPopupD(e, formTitle);
+            });
+        }
+        if(document.querySelector("button[id*='discordJ']") !== null){
+            document.querySelector("button[id*='discordJ']").addEventListener("click", function(e){
+                document.body.style.cursor='wait';
+                openPopupDJ(e, formTitle);
+                setTimeout(() => {  console.log(""); }, 1000);
+                document.body.style.cursor='auto';
+            });
+        }
+        if(document.querySelector("button[id*='twitter']") !== null){
+            document.querySelector("button[id*='twitter']").addEventListener("click", function(e){
+                openPopupT(e, formTitle);
+            });
+        }
+        if(document.querySelector("#completeT") !== null){
+            addxptopath();
+        }
+        
+    });
+    </script>
+    
+    <script>
+    function dontHref(){
+        return false;
+    }
+    </script>
+
+    <script>
+    window.addEventListener('load', async () => {
+        if(document.getElementById('inputNext')){
+            var popupTick = setInterval(function () {
+                let inputs = document.getElementsByClassName('required');
+                let btn =  document.getElementById('inputNext');
+                let isValid = true;
+
+                for (var i = 0; i < inputs.length; i++){
+                    let changedInput = inputs[i];
+                    if (changedInput.value.trim() === "" || changedInput.value === null){
+                        isValid = false;
+                        break;
+                    }
+                }
+                if(document.querySelector("#linkedDiscord") !== null){
+                    const elem = document.querySelector("#linkedDiscord");
+                    var html = elem.innerHTML;
+                    if(html.includes("Linked")){
+                        isValid = true;
+                    }else{
+                        isValid = false;
+                    }
+                }
+                if(document.querySelector("#linkedTwitter") !== null){
+                    const elem = document.querySelector("#linkedTwitter");
+                    var html = elem.innerHTML;
+                    if(html.includes("Linked")){
+                        isValid = true;
+                    }else{
+                        isValid = false;
+                    }
+                }
+                btn.disabled = !isValid;
+            }, 1000);
+        }
+    });
+    </script>
+</head>
+    <body>
+        <script type="text/javascript" src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script>
+        <script type="text/javascript" src="js/index.js"></script> 
+        <div id="template" class="TemplatesRootRoot baseTop1 baseTop"><img alt="background" style="background-image:url(https://firebasestorage.googleapis.com/v0/b/vinci-prod.appspot.com/o/projectData%2Fazuki-community-5703d009-669f-4%2Fscreen-31b52ecf-2159-4818-8499-57389b8c4dd8%2Flogo.png?alt=media&amp;token=b0295d0e-4103-410b-a416-d1b8684c20c9)" src="https://firebasestorage.googleapis.com/v0/b/vinci-prod.appspot.com/o/projectData%2Fazuki-community-5703d009-669f-4%2Fscreen-31b52ecf-2159-4818-8499-57389b8c4dd8%2Flogo.png?alt=media&amp;token=b0295d0e-4103-410b-a416-d1b8684c20c9" class="BrandLogo1 image_ButtonsTemplate"/><div id="#" data-xp="100" class="FlexColumn col1"><div class="FlexColumn1 col2"><div class="Text1 title">Learn more about Azuki</div><div class="Paragraph paragP">Take a sec. to learn about us</div></div><div class="FlexRow col3"><span class="text textP"><p>VISION &amp; VALUE //</p>
+<p><br/></p>
+<p>We are the skaters of the internet. We’re skating between the blurred lines of the physical and digital worlds as they are beginning to blend. We are a community of individuals who aren’t afraid to push the boundaries, challenge the status quo, and communicate boldly. We’re making an impact on web3 culture.</p>
+<p>Our vision is to create the largest decentralized brand for the metaverse that is built and owned by the community.</p>
+<ul>
+  <li>Values:</li>
+  <li>Community first:<br/>
+ Everything starts and ends with the community. The moment we prioritize something other than the community will be the beginning of the end. We won&#x27;t let that happen, because we&#x27;ll always have community as the #1 value of Azuki.</li>
+  <li>Dope sh*t only:<br/>
+ Azuki is creative, brave, relentless. It&#x27;s easy to follow trends and improve incrementally. It&#x27;s harder to be original and do dope sh*t. We pave our own path.</li>
+  <li>Trust the process:<br/>
+ Good things take time. Decentralized movements can&#x27;t turn corners as quickly as centralized movements, and that&#x27;s both a blessing and a curse. Decentralized doesn&#x27;t mean there can&#x27;t be leaders. The core team will provide guard rails and resources for all beans to grow together, but it won&#x27;t happen overnight. !ttp</li>
+</ul></span></div><div class="FlexRow1 row2"><a href="condition-1b68df27-50c2-4cc6-b7a1-12474c6738c0.html"><button style="background-color:#bc3748" class="LastWeek4 buttonContent">Back</button></a><a id="screen-79d56830-b71f-412f-8291-e79f819689a0" href="screen-79d56830-b71f-412f-8291-e79f819689a0"><button id="#" style="background-color:#bc3748" class="LastWeek4 buttonContent">Next</button></a></div></div></div>
+    </body>
+</html>
